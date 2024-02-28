@@ -1,4 +1,5 @@
-﻿using Entities;
+﻿using AtividadeInterface1.Services;
+using Entities;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -12,20 +13,20 @@ namespace Services
         public double PricePerHour { get; private set; }
         public double PricePerDay { get; private set; }
 
-        private BrazilTaxService _brazilTaxService = new BrazilTaxService();
+        private ITaxService _TaxService;
 
-
-        public RentalService(double pricePerHour, double pricePerDay)
+        public RentalService(double pricePerHour, double pricePerDay, ITaxService taxService)
         {
             PricePerHour = pricePerHour;
             PricePerDay = pricePerDay;
+            _TaxService = taxService;
         }
 
         public void ProcessInvoice(CarRental carRental)
         {
-            TimeSpan duration = carRental.Start.Subtract(carRental.Finish);
+            TimeSpan duration = carRental.Finish.Subtract(carRental.Start);
 
-            double BasicPayment = 0;
+            double BasicPayment = 0.0;
 
             if (duration.TotalHours <= 12.0)
             {
@@ -36,7 +37,7 @@ namespace Services
                 BasicPayment = PricePerDay * Math.Ceiling(duration.TotalDays);
             }
 
-            double tax = _brazilTaxService.Tax(BasicPayment);
+            double tax = _TaxService.Tax(BasicPayment);
 
             carRental.Invoice = new Invoice(BasicPayment, tax);
         }

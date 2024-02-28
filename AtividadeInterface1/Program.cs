@@ -9,24 +9,24 @@ namespace AtividadeInterface1
         static void Main(string[] args)
         {
             Console.WriteLine("Enter rental Data:");
-            Console.WriteLine("Car Model: ");
+            Console.Write("Car Model: ");
             string model = Console.ReadLine();
 
-            Console.WriteLine("Pickup (dd/MM/yyyy hh:mm):");
-            DateTime start = DateTime.ParseExact(Console.ReadLine(), "dd/MM/yyyy hh:mm", CultureInfo.InvariantCulture);
+            Console.Write("Pickup (dd/MM/yyyy hh:mm):");
+            DateTime start = DateTime.ParseExact(Console.ReadLine(), "dd/MM/yyyy HH:mm", CultureInfo.InvariantCulture);
             
-            Console.WriteLine("Return (dd/MM/yyyy hh:mm):");
-            DateTime finish = DateTime.ParseExact(Console.ReadLine(), "dd/MM/yyyy hh:mm", CultureInfo.InvariantCulture);
+            Console.Write("Return (dd/MM/yyyy hh:mm):");
+            DateTime finish = DateTime.ParseExact(Console.ReadLine(), "dd/MM/yyyy HH:mm", CultureInfo.InvariantCulture);
 
-            Console.WriteLine("Enter price per hour: ");
+            Console.Write("Enter price per hour: ");
             double hour = double.Parse(Console.ReadLine());
 
-            Console.WriteLine("Enter price per day: ");
+            Console.Write("Enter price per day: ");
             double day = double.Parse(Console.ReadLine());
 
             CarRental carRental = new CarRental(start,finish,new Vehicle(model));
 
-            RentalService rentalService = new RentalService(hour, day);
+            RentalService rentalService = new RentalService(hour, day, new BrazilTaxService());
 
             rentalService.ProcessInvoice(carRental);
 

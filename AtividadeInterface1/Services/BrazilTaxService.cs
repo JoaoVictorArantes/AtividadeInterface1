@@ -1,4 +1,5 @@
-﻿using System;
+﻿using AtividadeInterface1.Services;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -6,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace Services
 {
-    internal class BrazilTaxService
+    internal class BrazilTaxService : ITaxService
     {
         public double Tax(double amount)
         {
